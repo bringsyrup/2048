@@ -17,6 +17,7 @@ try:
 except:
     pass
 
+
 class Game(object):
 
     def __init__(self, fillColor=(255,255,255), circBorder=(200,200,230), layers=4):
@@ -99,6 +100,27 @@ class Game(object):
             pg.display.update()
             counter += 1
                    
+
+
+class KeyboardController:
+    """
+    Using arrow keys to control movement of slices
+    """
+    def __init__(self, Game):
+        self.Game = Game
+
+    def arrowkey_event(self, event):
+        if event.type == K_UP:
+            print("Move In")
+        elif event.type == K_DOWN:
+            print("Move Out")
+        elif event.type == K_LEFT:
+            print("Move Clockwise")
+        elif event.type == K_RIGHT:
+            print("Move Counter-Clockwise")
+
+
+
 if __name__=="__main__":
     
     newGame = Game()
