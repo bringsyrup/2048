@@ -1,4 +1,9 @@
-#! /bin/env python
+
+"""
+button class! 
+imorts buttAction to make live buttons a thing
+static buttons are just rectangles
+"""
 
 import pygame as pg
 from buttActions import buttAction

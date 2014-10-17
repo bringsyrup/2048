@@ -1,4 +1,8 @@
-#! /bin/env python
+"""
+Button class helper script
+makes live buttons a thing
+add new elif statement every time you make a new live button
+"""
 
 def buttAction(buttnumber):
     '''finds which button was pressed and does some action for that button'''
