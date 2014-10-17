@@ -10,7 +10,6 @@ import pygame as pg
 from math import pi
 import sys
 from pygame.locals import *
-import buttActions as butts
 from button import Button
 
 try:
