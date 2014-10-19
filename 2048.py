@@ -87,10 +87,13 @@ class Game(object):
             control = Controller()
             pg.event.pump()
             for event in pg.event.get():
-                if event.type == QUIT:
-                   print "thanks for playing Ruby and Brian's 2048!"
-                   pg.quit()
-                   sys.exit()
+                if event.type == QUIT or event.type == KEYDOWN:
+                    if event.key != K_ESCAPE:
+                        control.keys(event)
+                    else:
+                        print "thanks for playing Ruby and Brian's 2048!"
+                        pg.quit()
+                        sys.exit()
                 elif event.type == VIDEORESIZE:
                     screen = self.init(dims=(event.w, event.h))
                 elif event.type == MOUSEBUTTONUP:
@@ -98,8 +101,6 @@ class Game(object):
                     butts = self.init(dims=screenSize, buttCheck=True)
                     for i, butt in enumerate(butts):
                         butt.liveButton(i)
-                elif event.type == KEYDOWN:
-                    control.keys(event)
             pg.display.update()
             counter += 1
                    
@@ -121,11 +122,6 @@ class Controller(object):
             print("Move Clockwise")
         elif event.key == K_RIGHT:
             print("Move Counter-Clockwise")
-        elif event.key == K_ESCAPE:
-            print "thanks for playing Ruby and Brian's 2048!"
-            pg.quit()
-            sys.exit()
-
 
 
 if __name__=="__main__":
