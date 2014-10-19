@@ -84,6 +84,7 @@ class Game(object):
         while True:
             if counter == 0:
                 screen = self.init()
+            control = Controller()
             pg.event.pump()
             for event in pg.event.get():
                 if event.type == QUIT:
@@ -97,27 +98,33 @@ class Game(object):
                     butts = self.init(dims=screenSize, buttCheck=True)
                     for i, butt in enumerate(butts):
                         butt.liveButton(i)
+                elif event.type == KEYDOWN:
+                    control.keys(event)
             pg.display.update()
             counter += 1
                    
 
 
-class KeyboardController:
+class Controller(object):
     """
     Using arrow keys to control movement of slices
     """
-    def __init__(self, Game):
-        self.Game = Game
+    def __init__(self):
+        self = self
 
-    def arrowkey_event(self, event):
-        if event.type == K_UP:
+    def keys(self, event):
+        if event.key == K_UP:
             print("Move In")
-        elif event.type == K_DOWN:
+        elif event.key == K_DOWN:
             print("Move Out")
-        elif event.type == K_LEFT:
+        elif event.key == K_LEFT:
             print("Move Clockwise")
-        elif event.type == K_RIGHT:
+        elif event.key == K_RIGHT:
             print("Move Counter-Clockwise")
+        elif event.key == K_ESCAPE:
+            print "thanks for playing Ruby and Brian's 2048!"
+            pg.quit()
+            sys.exit()
 
 
 
