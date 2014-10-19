@@ -73,7 +73,7 @@ class Game(object):
         if buttCheck == False:
             return screen
         else:
-            return [newGame, pause]
+            return [newGame, pause] # return all live button objects in a list
             
     def main(self):
         """
