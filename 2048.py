@@ -11,6 +11,7 @@ from math import pi
 import sys
 from pygame.locals import *
 from button import Button
+from controller import Controller
 
 try:
     from pygame import gfxdraw
@@ -104,25 +105,6 @@ class Game(object):
             pg.display.update()
             counter += 1
                    
-
-
-class Controller(object):
-    """
-    Using arrow keys to control movement of slices
-    """
-    def __init__(self):
-        self = self
-
-    def keys(self, event):
-        if event.key == K_UP:
-            print("Move In")
-        elif event.key == K_DOWN:
-            print("Move Out")
-        elif event.key == K_LEFT:
-            print("Move Clockwise")
-        elif event.key == K_RIGHT:
-            print("Move Counter-Clockwise")
-
 
 if __name__=="__main__":
     
