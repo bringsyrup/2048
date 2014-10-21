@@ -17,18 +17,28 @@ class Controller(object):
     def keys(self, event, poly):
         if event.key == pg.K_UP:
             if poly.layer > 1:
-                pg.display.update(poly.init(dlayer=-1.))
-            return poly.theta, poly.layer
+                poly.layer -= 1
+                return poly.theta, poly.layer
+            else:
+                return poly.theta, poly.layer
         elif event.key == pg.K_DOWN:
             if poly.layer < 4:
-                pg.display.update(poly.init(dlayer=1.))
-            return poly.theta, poly.layer
+                poly.layer += 1
+                return poly.theta, poly.layer
+            else:
+                return poly.theta, poly.layer
         elif event.key == pg.K_LEFT:
-            pg.display.update(poly.init(dtheta=-pi/2))
-            return poly.theta, poly.layer
+            if poly.theta != 0.0:
+                poly.theta -= pi/2.
+                return poly.theta, poly.layer
+            else:
+                return poly.theta, poly.layer
         elif event.key == pg.K_RIGHT:
-            pg.display.update(poly.init(dtheta=pi/2))
-            return poly.theta, poly.layer
+            if poly.theta != 3*pi/2:
+                poly.theta += pi/2.
+                return poly.theta, poly.layer
+            else:
+                return poly.theta, poly.layer
         else:
             print "keyboard sequence no recognized"
             return poly.theta, poly.layer
