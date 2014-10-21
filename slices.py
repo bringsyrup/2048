@@ -20,20 +20,7 @@ class Slice(pg.sprite.Group):
         exec self.y
         return [x, y]
 
-    def init(self, dtheta=0, dlayer=0):
-        pg.draw.polygon(
-                self.screen, 
-                (255, 255, 255),
-                [self.points(self.theta, self.layer),
-                    self.points(self.theta, self.layer-1),
-                    self.points(pi/4+self.theta, self.layer-1),
-                    self.points(pi/2+self.theta, self.layer-1),
-                    self.points(pi/2+self.theta, self.layer),
-                    self.points(pi/4+self.theta, self.layer)
-                    ]
-                )
-        self.theta += dtheta
-        self.layer += dlayer
+    def init(self):
         pg.draw.polygon(
                 self.screen, 
                 (200, 200, 200),

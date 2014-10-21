@@ -69,25 +69,26 @@ class Game(object):
         screen.fill(self.fillColor)
         pg.display.set_caption("2048 on crack")
         buttons, live_butts = self.make_butts(dims, screen) 
-        poly_test = Slice(screen, dims, self.width-2, theta, layer)
+        poly_test = Slice(screen, dims, self.width, theta, layer)
         for i in range(1, self.layers+1):
             pg.draw.polygon(
                     screen, 
                     self.polyBorder, 
                     [
-                        [(.5*dims[0] + i/4*self.width*cos(0)), (.5*dims[1] + i/4*self.width*sin(0)]), 
-                        [(.5*dims[0] + i/4*self.width*cos(pi/4)), (.5*dims[1] + i/4*self.width*sin(pi/4)]),
-                        [.5*dims[0] + i/4*self.width*cos(pi/2), .5*dims[1] + i/4*self.width*sin(pi/2)], 
-                        [.5*dims[0] + i/4*self.width*cos(3*pi/4), .5*dims[1] + i/4*self.width*sin(3*pi/4)], 
-                        [.5*dims[0] + i/4*self.width*cos(pi), .5*dims[1] + i/4*self.width*sin(pi)], 
-                        [.5*dims[0] + i/4*self.width*cos(5*pi/4), .5*dims[1] + i/4*self.width*sin(5*pi/4)], 
-                        [.5*dims[0] + i/4*self.width*cos(6*pi/4), .5*dims[1] + i/4*self.width*sin(6*pi/4)], 
-                        [.5*dims[0] + i/4*self.width*cos(7*pi/4), .5*dims[1] + i/4*self.width*sin(7*pi/4)] 
+                        [(.5*dims[0] + i/4.*self.width*cos(0)), (.5*dims[1] + i/4.*self.width*sin(0))], 
+                        [(.5*dims[0] + i/4.*self.width*cos(pi/4)), (.5*dims[1] + i/4.*self.width*sin(pi/4))],
+                        [(.5*dims[0] + i/4.*self.width*cos(pi/2)), (.5*dims[1] + i/4.*self.width*sin(pi/2))], 
+                        [(.5*dims[0] + i/4.*self.width*cos(3*pi/4)), (.5*dims[1] + i/4.*self.width*sin(3*pi/4))], 
+                        [(.5*dims[0] + i/4.*self.width*cos(pi)), (.5*dims[1] + i/4.*self.width*sin(pi))], 
+                        [(.5*dims[0] + i/4.*self.width*cos(5*pi/4)), (.5*dims[1] + i/4.*self.width*sin(5*pi/4))], 
+                        [(.5*dims[0] + i/4.*self.width*cos(6*pi/4)), (.5*dims[1] + i/4.*self.width*sin(6*pi/4))], 
+                        [(.5*dims[0] + i/4.*self.width*cos(7*pi/4)), (.5*dims[1] + i/4.*self.width*sin(7*pi/4))] 
                         ],
                     3
                     )
         pg.display.flip()
         pg.display.update(buttons)
+        pg.display.update(poly_test.init())
         return screen, live_butts, poly_test
     
     def quit(self):
@@ -99,12 +100,11 @@ class Game(object):
         """
         function that runs the game. like the cpu of the game. kind of.
         """
-        rand_outer = [0, pi, 2*pi, 3*pi]
+        rand_outer = [0., pi/2., pi, 3.*pi/2.]
         curr_theta = rand_outer[randint(0, 3)]
         curr_layer = 4
         curr_dims = (1600, 875)
         screen, buttons, poly_test = self.init(curr_dims, theta=curr_theta)
-        pg.display.update(poly_test.init())
         control = Controller()
         while True:
             pg.event.pump()
@@ -121,6 +121,8 @@ class Game(object):
                 elif event.type == KEYDOWN:
                     if event.key != K_ESCAPE:
                         curr_theta, curr_layer = control.keys(event, poly_test)
+                        print curr_theta
+                        screen, buttons, poly_test = self.init(curr_dims, theta=curr_theta, layer=curr_layer)
                     else:
                         self.quit()
             pg.display.update()
