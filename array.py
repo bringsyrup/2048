@@ -19,7 +19,7 @@ class ArrayManipulation():
 		for poly in polys:
 			self.ValueMap[int((poly.theta)*(-2. / pi) + 3)][poly.layer - 1] = poly.value		#switching from theta to i and layer to j
 
-	return self.ValueMap
+		return self.ValueMap
 
 
 	def UP(self):
@@ -28,7 +28,7 @@ class ArrayManipulation():
 		"""Moving numbers to empty spaces"""
 		i = 0
 		for j in range(0,4):
-			if self.ValueMap[i][j]!=0 or self.ValueMap[i+1][j]!=0 or self.ValueMap[i+2][j]!=0 or self.ValueMap[i+3][j]!=0:""
+			if self.ValueMap[i][j]!=0 or self.ValueMap[i+1][j]!=0 or self.ValueMap[i+2][j]!=0 or self.ValueMap[i+3][j]!=0:
 				if self.ValueMap[i][j] == 0:
 					while self.ValueMap[i][j] == 0:
 						self.ValueMap[i][j] = self.ValueMap[i+1][j]
@@ -62,7 +62,7 @@ class ArrayManipulation():
 				self.ValueMap[i+3][j] = 0
 
 
-	return ArrayToPolys()
+		return ArrayToPolys()
 
 
 	def DOWN(self):
@@ -105,7 +105,7 @@ class ArrayManipulation():
 				self.ValueMap[i][j] = 0
 
 
-	return ArrayToPolys()
+		return ArrayToPolys()
 
 
 	def LEFT(self):
@@ -148,7 +148,7 @@ class ArrayManipulation():
 				self.ValueMap[i][j+2] = self.ValueMap[i][j+2] + self.ValueMap[i][j+3]
 				self.ValueMap[i][j+3] = 0
 
-	return ArrayToPolys()
+		return ArrayToPolys()
 
 
 	def RIGHT(self):
@@ -190,7 +190,7 @@ class ArrayManipulation():
 				self.ValueMap[i][j+1] = self.ValueMap[i][j+1] + self.ValueMap[i][j]
 				self.ValueMap[i][j] = 0
 
-	return ArrayToPolys()
+		return ArrayToPolys()
 
 """
 	def RandomPopup(self):
@@ -199,7 +199,8 @@ class ArrayManipulation():
 			for j in range(f)
 				if self.ValueMap[i][j] == 0:
 					openspots.append((i,j))
-		random.choice(openspots)
+		(a,b) = random.choice(openspots)
+		ValueMap[a][b] = 2
 
 	"""
 	def ArrayToPolys(self):
@@ -209,4 +210,4 @@ class ArrayManipulation():
 				if self.ValueMap[i][j] != 0:
 					polys_list.append([int((pi / 2) * (3 - i)), j + 1, self.ValueMap[i][j]])		#populating list of form: [[theta, layer, value], [...]]
 
-	return polys_list
+		return polys_list
