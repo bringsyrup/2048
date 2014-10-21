@@ -7,41 +7,28 @@ ________/2048\_______
 
 
 import pygame as pg
-from math import pi
 import sys
 from pygame.locals import *
 from button import Button
 from controller import Controller
-
-try:
-    from pygame import gfxdraw
-except:
-    pass
-
+from math import pi, cos, sin
+from slices import Slice
+from random import randint
 
 class Game(object):
 
-    def __init__(self, fillColor=(255,255,255), circBorder=(200,200,230), layers=4):
+    def __init__(self, fillColor=(255,255,255), polyBorder=(100,100,100), layers=4, width=200):
         """
         initialize Game class with background color, circle color and number of circles
         """
         self.fillColor = fillColor
-        self.circBorder = circBorder
+        self.polyBorder = polyBorder
         self.layers = layers
+        self.width = width
 
-    def init(self, dims=(1600, 875), buttCheck=False):
-        """
-        initial game setup
-        """
-        pg.init()
-        screen = pg.display.set_mode(dims, HWSURFACE|DOUBLEBUF|RESIZABLE )
-        screen.fill(self.fillColor)
-        for i in range(1, self.layers+1):
-            try:
-                pg.gfxdraw.circle(screen, dims[0]/2, dims[1]/2, i*200/layers, self.circBorder)
-            except:
-                pg.draw.circle(screen, self.circBorder, (dims[0]/2, dims[1]/2), i*200/self.layers, 2)
-        pg.display.set_caption("2048 on crack")
+    def make_butts(self, dims, screen):
+        button_list = tuple()
+        live_butts = list()
         '''make NEW GAME dynamic button'''
         newGame = Button(
                     screen,
@@ -50,16 +37,18 @@ class Game(object):
                     ["new game", 20],
                     [(210, 210, 255), (200, 200, 230), (0, 0, 0)]
                     )
-        fillNG, borderNG, textNG = newGame.staticButton() 
+        live_butts.append(newGame)
+        button_list += newGame.staticButton()
         '''make PAUSE dynamic button'''
         pause = Button(
                     screen,
                     [100, 50],
                     [dims[0]/4-100, dims[1]-75],
                     ["pause", 20],
-                    [(230, 210, 210), (230, 100, 100), (0, 0, 0)]
+                    [(230, 200, 200), (230, 100, 100), (0, 0, 0)]
                     )
-        fillPS, borderPS, textPS = pause.staticButton() 
+        live_butts.append(pause)
+        button_list += pause.staticButton()
         '''make HIGH SCORE static button'''
         highScore = Button(
                     screen,
@@ -68,44 +57,74 @@ class Game(object):
                     ["HIGH SCORE:", 20],
                     [(255, 255, 255), (255, 255, 255), (0, 0, 0)]
                     )
-        fillHS, borderHS, textHS = highScore.staticButton()
+        button_list += highScore.staticButton()
+        return button_list, live_butts
+
+    def init(self, dims, theta=0, layer=4):
+        """
+        initial game setup
+        """
+        pg.init()
+        screen = pg.display.set_mode(dims, HWSURFACE|DOUBLEBUF|RESIZABLE )
+        screen.fill(self.fillColor)
+        pg.display.set_caption("2048 on crack")
+        buttons, live_butts = self.make_butts(dims, screen) 
+        poly_test = Slice(screen, dims, self.width-2, theta, layer)
+        for i in range(1, self.layers+1):
+            pg.draw.polygon(
+                    screen, 
+                    self.polyBorder, 
+                    [
+                        [(.5*dims[0] + i/4*self.width*cos(0)), (.5*dims[1] + i/4*self.width*sin(0)]), 
+                        [(.5*dims[0] + i/4*self.width*cos(pi/4)), (.5*dims[1] + i/4*self.width*sin(pi/4)]),
+                        [.5*dims[0] + i/4*self.width*cos(pi/2), .5*dims[1] + i/4*self.width*sin(pi/2)], 
+                        [.5*dims[0] + i/4*self.width*cos(3*pi/4), .5*dims[1] + i/4*self.width*sin(3*pi/4)], 
+                        [.5*dims[0] + i/4*self.width*cos(pi), .5*dims[1] + i/4*self.width*sin(pi)], 
+                        [.5*dims[0] + i/4*self.width*cos(5*pi/4), .5*dims[1] + i/4*self.width*sin(5*pi/4)], 
+                        [.5*dims[0] + i/4*self.width*cos(6*pi/4), .5*dims[1] + i/4*self.width*sin(6*pi/4)], 
+                        [.5*dims[0] + i/4*self.width*cos(7*pi/4), .5*dims[1] + i/4*self.width*sin(7*pi/4)] 
+                        ],
+                    3
+                    )
         pg.display.flip()
-        pg.display.update((fillNG, borderNG, textNG, fillHS, borderHS, textHS, fillPS, borderPS, textPS))
-        if buttCheck == False:
-            return screen
-        else:
-            return [newGame, pause] # return all live button objects in a list
-            
+        pg.display.update(buttons)
+        return screen, live_butts, poly_test
+    
+    def quit(self):
+        print "thanks for playing Ruby and Brian's 2048!"
+        pg.quit()
+        sys.exit()
+
     def main(self):
         """
         function that runs the game. like the cpu of the game. kind of.
         """
-
-        counter = 0
+        rand_outer = [0, pi, 2*pi, 3*pi]
+        curr_theta = rand_outer[randint(0, 3)]
+        curr_layer = 4
+        curr_dims = (1600, 875)
+        screen, buttons, poly_test = self.init(curr_dims, theta=curr_theta)
+        pg.display.update(poly_test.init())
+        control = Controller()
         while True:
-            if counter == 0:
-                screen = self.init()
-            control = Controller()
             pg.event.pump()
             for event in pg.event.get():
-                if event.type == QUIT or event.type == KEYDOWN:
-                    if event.key != K_ESCAPE:
-                        control.keys(event)
-                    else:
-                        print "thanks for playing Ruby and Brian's 2048!"
-                        pg.quit()
-                        sys.exit()
+                if event.type == QUIT:
+                    self.quit()
                 elif event.type == VIDEORESIZE:
-                    screen = self.init(dims=(event.w, event.h))
+                    curr_dims = (event.w, event.h)
+                    screen, buttons, poly_test = self.init(curr_dims, theta=curr_theta, layer=curr_layer)
+                    pg.display.update(poly_test.init())
                 elif event.type == MOUSEBUTTONUP:
-                    screenSize = screen.get_size()
-                    butts = self.init(dims=screenSize, buttCheck=True)
-                    for i, butt in enumerate(butts):
+                    for i, butt in enumerate(buttons):
                         butt.liveButton(i)
+                elif event.type == KEYDOWN:
+                    if event.key != K_ESCAPE:
+                        curr_theta, curr_layer = control.keys(event, poly_test)
+                    else:
+                        self.quit()
             pg.display.update()
-            counter += 1
                    
-
 if __name__=="__main__":
     
     newGame = Game()

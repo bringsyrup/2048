@@ -4,6 +4,8 @@ contains motion control keys for shapes
 """
 
 import pygame as pg
+from slices import Slice
+from math import pi
 
 class Controller(object):
     """
@@ -12,14 +14,22 @@ class Controller(object):
     def __init__(self):
         self = self
 
-    def keys(self, event):
+    def keys(self, event, poly):
         if event.key == pg.K_UP:
-            print("Move In")
+            if poly.layer > 1:
+                pg.display.update(poly.init(dlayer=-1.))
+            return poly.theta, poly.layer
         elif event.key == pg.K_DOWN:
-            print("Move Out")
+            if poly.layer < 4:
+                pg.display.update(poly.init(dlayer=1.))
+            return poly.theta, poly.layer
         elif event.key == pg.K_LEFT:
-            print("Move Clockwise")
+            pg.display.update(poly.init(dtheta=-pi/2))
+            return poly.theta, poly.layer
         elif event.key == pg.K_RIGHT:
-            print("Move Counter-Clockwise")
-
+            pg.display.update(poly.init(dtheta=pi/2))
+            return poly.theta, poly.layer
+        else:
+            print "keyboard sequence no recognized"
+            return poly.theta, poly.layer
 

@@ -8,7 +8,7 @@ static buttons are just rectangles
 import pygame as pg
 from buttActions import buttAction
 
-class Button(pg.sprite.Sprite):
+class Button(object):
     """
     button creator!
     """
@@ -68,6 +68,6 @@ class Button(pg.sprite.Sprite):
                     ),
                 textLocation
                 )
-        return fill, border, text
+        return (fill, border, text)
 
 
