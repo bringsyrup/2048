@@ -2,13 +2,13 @@
 Creating array to track values
 """
 
-from random import randint
 from math import pi
 import pygame as pg
+import random
 
 
 
-class ArrrayManipulation():
+class ArrayManipulation():
 
 	def __init__(self, polys):
 		self.ValueMap = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
@@ -22,7 +22,7 @@ class ArrrayManipulation():
 	return self.ValueMap
 
 
-	def UP(self, ValueMap):
+	def UP(self):
 		"""when up is pressed"""
 
 		"""Moving numbers to empty spaces"""
@@ -62,10 +62,10 @@ class ArrrayManipulation():
 				self.ValueMap[i+3][j] = 0
 
 
-	return self.ValueMap
+	return ArrayToPolys()
 
 
-	def DOWN(self, ValueMap):
+	def DOWN(self):
 		"""when down is pressed"""
 
 		"""Moving numbers to empty spaces"""
@@ -104,10 +104,11 @@ class ArrrayManipulation():
 				self.ValueMap[i+1][j] = self.ValueMap[i+1][j] + self.ValueMap[i][j]
 				self.ValueMap[i][j] = 0
 
-	return self.ValueMap
+
+	return ArrayToPolys()
 
 
-	def LEFT(self, ValueMap):
+	def LEFT(self):
 		"""when left is pressed"""
 
 		"""Moving numbers to empty spaces"""
@@ -147,10 +148,10 @@ class ArrrayManipulation():
 				self.ValueMap[i][j+2] = self.ValueMap[i][j+2] + self.ValueMap[i][j+3]
 				self.ValueMap[i][j+3] = 0
 
-	return self.ValueMap
+	return ArrayToPolys()
 
 
-	def RIGHT(self, ValueMap):
+	def RIGHT(self):
 		"""when right is pressed"""
 
 		"""Moving numbers to empty spaces"""
@@ -189,9 +190,16 @@ class ArrrayManipulation():
 				self.ValueMap[i][j+1] = self.ValueMap[i][j+1] + self.ValueMap[i][j]
 				self.ValueMap[i][j] = 0
 
-	return self.ValueMap
+	return ArrayToPolys()
+
 """
 	def RandomPopup(self):
+		openspots = []
+		for i in range(4)
+			for j in range(f)
+				if self.ValueMap[i][j] == 0:
+					openspots.append((i,j))
+		random.choice(openspots)
 
 	"""
 	def ArrayToPolys(self):
