@@ -60,7 +60,7 @@ class Game(object):
         button_list += highScore.staticButton()
         return button_list, live_butts
 
-    def init(self, dims, theta=0, layer=4):
+    def init(self, dims, polypos=[[0, 4, 2], [0, 3, 2]]):
         """
         initial game setup
         """
@@ -69,7 +69,6 @@ class Game(object):
         screen.fill(self.fillColor)
         pg.display.set_caption("2048 on crack")
         buttons, live_butts = self.make_butts(dims, screen) 
-        poly_test = Slice(screen, dims, self.width, theta, layer)
         for i in range(1, self.layers+1):
             pg.draw.polygon(
                     screen, 
@@ -88,23 +87,26 @@ class Game(object):
                     )
         pg.display.flip()
         pg.display.update(buttons)
-        pg.display.update(poly_test.init())
-        return screen, live_butts, poly_test
+        polys = list()
+        for poly in polypos:
+            new_poly = Slice(screen, dims, self.width, poly[0], poly[1], poly[2])
+            polys.append(new_poly)
+            pg.display.update(new_poly.init())
+        return screen, live_butts, polys
     
     def quit(self):
         print "thanks for playing Ruby and Brian's 2048!"
         pg.quit()
         sys.exit()
 
-    def main(self):
+    def run(self):
         """
         function that runs the game. like the cpu of the game. kind of.
         """
         rand_outer = [0., pi/2., pi, 3.*pi/2.]
-        curr_theta = rand_outer[randint(0, 3)]
-        curr_layer = 4
+        curr_polypos = [[rand_outer[randint(0, 3)], randint(1, 2), 2], [rand_outer[randint(0, 3)], randint(3, 4), 2]]
         curr_dims = (1600, 875)
-        screen, buttons, poly_test = self.init(curr_dims, theta=curr_theta)
+        screen, buttons, polys = self.init(curr_dims, polypos=curr_polypos)
         control = Controller()
         while True:
             pg.event.pump()
@@ -113,16 +115,20 @@ class Game(object):
                     self.quit()
                 elif event.type == VIDEORESIZE:
                     curr_dims = (event.w, event.h)
-                    screen, buttons, poly_test = self.init(curr_dims, theta=curr_theta, layer=curr_layer)
-                    pg.display.update(poly_test.init())
+                    screen, buttons, polys = self.init(curr_dims, polypos=curr_polypos)
                 elif event.type == MOUSEBUTTONUP:
                     for i, butt in enumerate(buttons):
-                        butt.liveButton(i)
+                        buttNumb =  butt.liveButton(i)
+                        if buttNumb == 0:
+                            print "new game"
+                            self.run()
+                        else:
+                            print "game paused"
+                            break
                 elif event.type == KEYDOWN:
                     if event.key != K_ESCAPE:
-                        curr_theta, curr_layer = control.keys(event, poly_test)
-                        print curr_theta
-                        screen, buttons, poly_test = self.init(curr_dims, theta=curr_theta, layer=curr_layer)
+                        curr_polypos = control.keys(event, polys)
+                        screen, buttons, polys = self.init(curr_dims, polypos=curr_polypos)
                     else:
                         self.quit()
             pg.display.update()
@@ -130,4 +136,4 @@ class Game(object):
 if __name__=="__main__":
     
     newGame = Game()
-    newGame.main()
+    newGame.run()

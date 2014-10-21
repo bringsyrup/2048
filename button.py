@@ -6,7 +6,6 @@ static buttons are just rectangles
 """
 
 import pygame as pg
-from buttActions import buttAction
 
 class Button(object):
     """
@@ -33,7 +32,7 @@ class Button(object):
     def liveButton(self, buttNumb):
         pos = pg.mouse.get_pos()
         if pos[0] >= self.location[0] and pos[1] >= self.location[1] and pos[0] <= (self.location[0] + self.size[0]) and pos[1] <= (self.location[1] + self.size[1]):
-            buttAction(buttNumb)
+            return buttNumb
         return self.staticButton()
 
     def staticButton(self):
