@@ -99,13 +99,12 @@ class Game(object):
         pg.quit()
         sys.exit()
 
-    def run(self):
+    def run(self, curr_dims=(1600, 875)):
         """
         function that runs the game. like the cpu of the game. kind of.
         """
         rand_outer = [0., pi/2., pi, 3.*pi/2.]
         curr_polypos = [[rand_outer[randint(0, 3)], randint(1, 2), 2], [rand_outer[randint(0, 3)], randint(3, 4), 2]]
-        curr_dims = (1600, 875)
         screen, buttons, polys = self.init(curr_dims, polypos=curr_polypos)
         control = Controller()
         while True:
@@ -121,7 +120,7 @@ class Game(object):
                         buttNumb =  butt.liveButton(i)
                         if buttNumb == 0:
                             print "new game"
-                            self.run()
+                            self.run(curr_dims=curr_dims)
                         else:
                             print "game paused"
                             break
