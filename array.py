@@ -3,21 +3,23 @@ Creating array to track values
 """
 
 from random import randint
+from math import pi
 import pygame as pg
+
 
 
 class ArrrayManipulation():
 
 	def __init__(self, polys):
-
 		self.ValueMap = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-		self.ValueMap[randint(0,3)][randint(0,3)] = 2		#start with one 2
-
 
 	def Polys2Array(self, polys):
 		"""converts list of polygons to matrix ValueMap"""
-		###something here###
-	return ValueMap
+		
+		for poly in polys:
+			self.ValueMap[int((poly.theta)*(-2. / pi) + 3)][poly.layer - 1] = poly.value		#switching from theta to i and layer to j
+
+	return self.ValueMap
 
 
 	def UP(self, ValueMap):
@@ -173,7 +175,7 @@ class ArrrayManipulation():
 
 		"""Adding similar sumbers in adjacent spaces"""
 		j = 0
-		for i in range(0,4)
+		for i in range(0,4):
 			if self.ValueMap[i][j+3] == self.ValueMap[i][j+2]:
 				self.ValueMap[i][j+3] = self.ValueMap[i][j+3] + self.ValueMap[i][j+2]
 				self.ValueMap[i][j+2] = self.ValueMap[i][j+1]
@@ -188,8 +190,15 @@ class ArrrayManipulation():
 				self.ValueMap[i][j] = 0
 
 	return self.ValueMap
+"""
+	def RandomPopup(self):
 
+	"""
+	def ArrayToPolys(self):
+		polys_list = []
+		for i in range(4):
+			for j in range(4):
+				if self.ValueMap[i][j] != 0:
+					polys_list.append([int((pi / 2) * (3 - i)), j + 1, self.ValueMap[i][j]])		#populating list of form: [[theta, layer, value], [...]]
 
-	def ArrayToPolys(self, ValueMap):
-
-	return polys
+	return polys_list
