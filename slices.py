@@ -5,7 +5,7 @@ class for a single slidy thing given outer layer, width of layer, screen dimensi
 import pygame as pg
 from math import sin, cos, pi
 
-class Slice(pg.sprite.Group):
+class Slice(object):
     def __init__(self, screen, dims, width, theta, layer, value):
         self.screen = screen
         self.dims = dims
