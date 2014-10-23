@@ -46,7 +46,7 @@ class Slice(object):
                 3
                 )
         self.screen.blit(
-                pg.font.SysFont('Arial', 20).render(str(self.value), True, (100, 100, 100)),
+                pg.font.SysFont('Arial', 12).render(str(self.value), True, (100, 100, 100)),
                 (
                     self.points(pi/4+self.theta, self.layer-1)[0] + ((self.points(pi/4+self.theta, self.layer)[0]-self.points(pi/4+self.theta, self.layer-1)[0])/2) - 4,
                     self.points(pi/4+self.theta, self.layer)[1] + ((self.points(pi/4+self.theta, self.layer-1)[1]-self.points(pi/4+self.theta, self.layer)[1])/2) - 7

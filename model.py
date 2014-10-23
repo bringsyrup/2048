@@ -5,7 +5,7 @@ Creating array to track values
 from math import pi
 from slices import Slice
 import pygame as pg
-import random
+import random as rand
 
 
 class ArrayManipulation():
@@ -19,8 +19,14 @@ class ArrayManipulation():
 
         for poly in self.polys:
             self.ValueMap[int((poly.theta)*(2. / pi))][int(poly.layer - 1)] = int(poly.value)		#switching from theta to i and layer to j
-        #return self.ValueMap
 
+    def randGen(self):
+        zeros = list()
+        for i, row in enumerate(self.ValueMap):
+            for j, val in enumerate(row):
+                if val == 0:
+                    zeros.append([i,j])
+        return zeros
 
     def LEFT(self):
         """when left is pressed"""
@@ -181,5 +187,10 @@ class ArrayManipulation():
         for i in range(4):
             for j in range(4):
                 if self.ValueMap[i][j] != 0:
-                    polys_list.append([(pi/2.)*i, j + 1, self.ValueMap[i][j]])		#populating list of form: [[theta, layer, value], [...]]
+                    polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j]])		#populating list of form: [[theta, layer, value], [...]]
+        zeros = self.randGen()
+        if zeros:
+            rand_point = rand.choice(zeros)
+            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2])	
         return polys_list
+    
