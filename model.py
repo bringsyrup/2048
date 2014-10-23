@@ -26,40 +26,37 @@ class ArrayManipulation():
         """when left is pressed"""
         self.Polys2Array()
         """Moving numbers to empty spaces"""
-        i = 0
-        for j in range(0,4):
-            if self.ValueMap[i][j]!=0 or self.ValueMap[i+1][j]!=0 or self.ValueMap[i+2][j]!=0 or self.ValueMap[i+3][j]!=0:
-                if self.ValueMap[i][j] == 0:
-                    while self.ValueMap[i][j] == 0:
-                        self.ValueMap[i][j] = self.ValueMap[i+1][j]
-                        self.ValueMap[i+1][j] = self.ValueMap[i+2][j]
-                        self.ValueMap[i+2][j] = self.ValueMap[i+3][j]
-                        self.ValueMap[i+3][j] = 0
-                if self.ValueMap[i+1][j] == 0 and (self.ValueMap[i+2][j]!=0 or self.ValueMap[i+3][j]!=0):
-                    while self.ValueMap[i+1][j] == 0:
-                        self.ValueMap[i+1][j] = self.ValueMap[i+2][j]
-                        self.ValueMap[i+2][j] = self.ValueMap[i+3][j]
-                        self.ValueMap[i+3][j] = 0
-                if self.ValueMap[i+2][j] == 0 and self.ValueMap[i+3][j]!=0:
-                    while self.ValueMap[i+2][j] == 0:
-                        self.ValueMap[i+2][j] = self.ValueMap[i+3][j]
-                        self.ValueMap[i+3][j] = 0
+        for j in range(4):
+            if self.ValueMap[0][j]!=0 or self.ValueMap[1][j]!=0 or self.ValueMap[2][j]!=0 or self.ValueMap[3][j]!=0:
+                if self.ValueMap[0][j] == 0:
+                    while self.ValueMap[0][j] == 0:
+                        for i in range(3):
+                            self.ValueMap[i][j] = self.ValueMap[i+1][j]
+                        self.ValueMap[3][j] = 0
+                if self.ValueMap[1][j] == 0 and (self.ValueMap[2][j]!=0 or self.ValueMap[3][j]!=0):
+                    while self.ValueMap[1][j] == 0:
+                        for i in range(1,3):
+                            self.ValueMap[i][j] = self.ValueMap[i+1][j]
+                        self.ValueMap[3][j] = 0
+                if self.ValueMap[2][j] == 0 and self.ValueMap[3][j]!=0:
+                    while self.ValueMap[2][j] == 0:
+                        self.ValueMap[2][j] = self.ValueMap[3][j]
+                        self.ValueMap[3][j] = 0
 
         """Adding similar numbers in adjacent spaces"""
-        i = 0
-        for j in range(0,4):
-            if self.ValueMap[i][j] == self.ValueMap[i+1][j]:
-                self.ValueMap[i][j] = self.ValueMap[i][j] + self.ValueMap[i+1][j]
-                self.ValueMap[i+1][j] = self.ValueMap[i+2][j]
-                self.ValueMap[i+2][j] = self.ValueMap[i+3][j]
-                self.ValueMap[i+3][j] = 0
-            if self.ValueMap[i+1][j] == self.ValueMap[i+2][j]:
-                self.ValueMap[i+1][j] = self.ValueMap[i+1][j] + self.ValueMap[i+2][j]
-                self.ValueMap[i+2][j] = self.ValueMap[i+3][j]
-                self.ValueMap[i+3][j] = 0
-            if self.ValueMap[i+2][j] == self.ValueMap[i+3][j]:
-                self.ValueMap[i+2][j] = self.ValueMap[i+2][j] + self.ValueMap[i+3][j]
-                self.ValueMap[i+3][j] = 0
+        for j in range(4):
+            if self.ValueMap[0][j] == self.ValueMap[1][j]:
+                self.ValueMap[0][j] = self.ValueMap[0][j] + self.ValueMap[1][j]
+                self.ValueMap[1][j] = self.ValueMap[2][j]
+                self.ValueMap[2][j] = self.ValueMap[3][j]
+                self.ValueMap[3][j] = 0
+            if self.ValueMap[1][j] == self.ValueMap[2][j]:
+                self.ValueMap[1][j] = self.ValueMap[1][j] + self.ValueMap[2][j]
+                self.ValueMap[2][j] = self.ValueMap[3][j]
+                self.ValueMap[3][j] = 0
+            if self.ValueMap[2][j] == self.ValueMap[3][j]:
+                self.ValueMap[2][j] = self.ValueMap[2][j] + self.ValueMap[3][j]
+                self.ValueMap[3][j] = 0
 
         return self.ArrayToPolys()
 
@@ -68,40 +65,37 @@ class ArrayManipulation():
         """when right is pressed"""
         self.Polys2Array()
         """Moving numbers to empty spaces"""
-        i = 0
-        for j in range(0,4):
-            if self.ValueMap[i][j]!=0 or self.ValueMap[i+1][j]!=0 or self.ValueMap[i+2][j]!=0 or self.ValueMap[i+3][j]!=0:
-                if self.ValueMap[i+3][j] == 0:
-                    while self.ValueMap[i+3][j] == 0:
-                        self.ValueMap[i+3][j] = self.ValueMap[i+2][j]
-                        self.ValueMap[i+2][j] = self.ValueMap[i+1][j]
-                        self.ValueMap[i+1][j] = self.ValueMap[i][j]
-                        self.ValueMap[i][j] = 0
-                if self.ValueMap[i+2][j] == 0 and (self.ValueMap[i+1][j]!=0 or self.ValueMap[i][j]!=0):
-                    while self.ValueMap[i+2][j] == 0:
-                        self.ValueMap[i+2][j] = self.ValueMap[i+1][j]
-                        self.ValueMap[i+1][j] = self.ValueMap[i][j]
-                        self.ValueMap[i][j] = 0
-                if self.ValueMap[i+1][j] == 0 and self.ValueMap[i][j]!=0:
-                    while self.ValueMap[i+1][j] == 0:
-                        self.ValueMap[i+1][j] = self.ValueMap[i][j]
-                        self.ValueMap[i][j] = 0
+        for j in range(4):
+            if self.ValueMap[0][j]!=0 or self.ValueMap[1][j]!=0 or self.ValueMap[2][j]!=0 or self.ValueMap[3][j]!=0:
+                if self.ValueMap[3][j] == 0:
+                    while self.ValueMap[3][j] == 0:
+                        for i in range(1,4):
+                            self.ValueMap[-i][j] = self.ValueMap[-(i+1)][j]
+                        self.ValueMap[0][j] = 0
+                if self.ValueMap[2][j] == 0 and (self.ValueMap[1][j]!=0 or self.ValueMap[0][j]!=0):
+                    while self.ValueMap[2][j] == 0:
+                        for i in range(2,4):
+                            self.ValueMap[-i][j] = self.ValueMap[-(i+1)][j]
+                        self.ValueMap[0][j] = 0
+                if self.ValueMap[1][j] == 0 and self.ValueMap[0][j]!=0:
+                    while self.ValueMap[1][j] == 0:
+                        self.ValueMap[1][j] = self.ValueMap[0][j]
+                        self.ValueMap[0][j] = 0
 
         """Adding similar numbers in adjacent spaces"""
-        i = 0
         for j in range(0,4):
-            if self.ValueMap[i+3][j] == self.ValueMap[i+2][j]:
-                self.ValueMap[i+3][j] = self.ValueMap[i+3][j] + self.ValueMap[i+2][j]
-                self.ValueMap[i+2][j] = self.ValueMap[i+1][j]
-                self.ValueMap[i+1][j] = self.ValueMap[i][j]
-                self.ValueMap[i][j] = 0
-            if self.ValueMap[i+2][j] == self.ValueMap[i+1][j]:
-                self.ValueMap[i+2][j] = self.ValueMap[i+2][j] + self.ValueMap[i+1][j]
-                self.ValueMap[i+1][j] = self.ValueMap[i][j]
-                self.ValueMap[i][j] = 0
-            if self.ValueMap[i+1][j] == self.ValueMap[i][j]:
-                self.ValueMap[i+1][j] = self.ValueMap[i+1][j] + self.ValueMap[i][j]
-                self.ValueMap[i][j] = 0
+            if self.ValueMap[3][j] == self.ValueMap[2][j]:
+                self.ValueMap[3][j] = self.ValueMap[3][j] + self.ValueMap[2][j]
+                self.ValueMap[2][j] = self.ValueMap[1][j]
+                self.ValueMap[1][j] = self.ValueMap[0][j]
+                self.ValueMap[0][j] = 0
+            if self.ValueMap[2][j] == self.ValueMap[1][j]:
+                self.ValueMap[2][j] = self.ValueMap[2][j] + self.ValueMap[1][j]
+                self.ValueMap[1][j] = self.ValueMap[0][j]
+                self.ValueMap[0][j] = 0
+            if self.ValueMap[1][j] == self.ValueMap[0][j]:
+                self.ValueMap[1][j] = self.ValueMap[1][j] + self.ValueMap[0][j]
+                self.ValueMap[0][j] = 0
 
         return self.ArrayToPolys()
 
@@ -110,40 +104,37 @@ class ArrayManipulation():
         """when up is pressed"""
         self.Polys2Array()
         """Moving numbers to empty spaces"""
-        j = 0
-        for i in range(0,4):
-            if self.ValueMap[i][j]!=0 or self.ValueMap[i][j+1]!=0 or self.ValueMap[i][j+2]!=0 or self.ValueMap[i][j+3]!= 0:
-                if self.ValueMap[i][j] == 0:
-                    while self.ValueMap[i][j] == 0:
-                        self.ValueMap[i][j] = self.ValueMap[i][j+1]
-                        self.ValueMap[i][j+1] = self.ValueMap[i][j+2]
-                        self.ValueMap[i][j+2] = self.ValueMap[i][j+3]
-                        self.ValueMap[i][j+3] = 0
-                if self.ValueMap[i][j+1] == 0 :
-                    while self.ValueMap[i][j+1] == 0 and (self.ValueMap[i][j+2]!=0 or self.ValueMap[i][j+3]!=0):
-                        self.ValueMap[i][j+1] = self.ValueMap[i][j+2]
-                        self.ValueMap[i][j+2] = self.ValueMap[i][j+3]
-                        self.ValueMap[i][j+3] = 0
-                if self.ValueMap[i][j+2] == 0:
-                    while self.ValueMap[i][j+2] == 0 and self.ValueMap[i][j+3]!=0:
-                        self.ValueMap[i][j+2] = self.ValueMap[i][j+3]
-                        self.ValueMap[i][j+3] = 0
+        for i in range(4):
+            if self.ValueMap[i][0]!=0 or self.ValueMap[i][1]!=0 or self.ValueMap[i][2]!=0 or self.ValueMap[i][3]!= 0:
+                if self.ValueMap[i][0] == 0:
+                    while self.ValueMap[i][0] == 0:
+                        for j in range(3):
+                            self.ValueMap[i][j] = self.ValueMap[i][j+1]
+                        self.ValueMap[i][3] = 0
+                if self.ValueMap[i][1] == 0 :
+                    while self.ValueMap[i][1] == 0 and (self.ValueMap[i][2]!=0 or self.ValueMap[i][3]!=0):
+                        self.ValueMap[i][1] = self.ValueMap[i][2]
+                        self.ValueMap[i][2] = self.ValueMap[i][3]
+                        self.ValueMap[i][3] = 0
+                if self.ValueMap[i][2] == 0:
+                    while self.ValueMap[i][2] == 0 and self.ValueMap[i][3]!=0:
+                        self.ValueMap[i][2] = self.ValueMap[i][3]
+                        self.ValueMap[i][3] = 0
 
         """Adding similar numbers in adjacent spaces"""
-        j = 0
-        for i in range(0,4):
-            if self.ValueMap[i][j] == self.ValueMap[i][j+1]:
-                self.ValueMap[i][j] = self.ValueMap[i][j] + self.ValueMap[i][j+1]
-                self.ValueMap[i][j+1] = self.ValueMap[i][j+2]
-                self.ValueMap[i][j+2] = self.ValueMap[i][j+3]
-                self.ValueMap[i][j+3] = 0
-            if self.ValueMap[i][j+1] == self.ValueMap[i][j+2]:
-                self.ValueMap[i][j+1] = self.ValueMap[i][j+1] + self.ValueMap[i][j+2]
-                self.ValueMap[i][j+2] = self.ValueMap[i][j+3]
-                self.ValueMap[i][j+3] = 0
-            if self.ValueMap[i][j+2] == self.ValueMap[i][j+3]:
-                self.ValueMap[i][j+2] = self.ValueMap[i][j+2] + self.ValueMap[i][j+3]
-                self.ValueMap[i][j+3] = 0
+        for i in range(4):
+            if self.ValueMap[i][0] == self.ValueMap[i][1]:
+                self.ValueMap[i][0] = self.ValueMap[i][0] + self.ValueMap[i][1]
+                self.ValueMap[i][1] = self.ValueMap[i][2]
+                self.ValueMap[i][2] = self.ValueMap[i][3]
+                self.ValueMap[i][3] = 0
+            if self.ValueMap[i][1] == self.ValueMap[i][2]:
+                self.ValueMap[i][1] = self.ValueMap[i][1] + self.ValueMap[i][2]
+                self.ValueMap[i][2] = self.ValueMap[i][3]
+                self.ValueMap[i][3] = 0
+            if self.ValueMap[i][2] == self.ValueMap[i][3]:
+                self.ValueMap[i][2] = self.ValueMap[i][2] + self.ValueMap[i][3]
+                self.ValueMap[i][3] = 0
 
         return self.ArrayToPolys()
 
@@ -151,40 +142,37 @@ class ArrayManipulation():
         """when down is pressed"""
         self.Polys2Array()
         """Moving numbers to empty spaces"""
-        j = 0
         for i in range(4):
-            if self.ValueMap[i][j]!=0 or self.ValueMap[i][j+1]!=0 or self.ValueMap[i][j+2]!=0 or self.ValueMap[i][j+3]!= 0:
-                if self.ValueMap[i][j+3] == 0:
-                    while self.ValueMap[i][j+3] == 0:
-                        self.ValueMap[i][j+3] = self.ValueMap[i][j+2]
-                        self.ValueMap[i][j+2] = self.ValueMap[i][j+1]
-                        self.ValueMap[i][j+1] = self.ValueMap[i][j]
-                        self.ValueMap[i][j] = 0
-                if self.ValueMap[i][j+2] == 0  and (self.ValueMap[i][j+1]!=0 or self.ValueMap[i][j]!=0):
-                    while self.ValueMap[i][j+2] == 0:
-                        self.ValueMap[i][j+2] = self.ValueMap[i][j+1]
-                        self.ValueMap[i][j+1] = self.ValueMap[i][j]
-                        self.ValueMap[i][j] = 0
-                if self.ValueMap[i][j+1] == 0:
-                    while self.ValueMap[i][j+1] == 0 and self.ValueMap[i][j]!=0:
-                        self.ValueMap[i][j+1] = self.ValueMap[i][j]
-                        self.ValueMap[i][j] = 0
+            if self.ValueMap[i][0]!=0 or self.ValueMap[i][1]!=0 or self.ValueMap[i][2]!=0 or self.ValueMap[i][3]!= 0:
+                if self.ValueMap[i][3] == 0:
+                    while self.ValueMap[i][3] == 0:
+                        for j in range(1,4):
+                            self.ValueMap[i][-j] = self.ValueMap[i][-(j+1)]
+                        self.ValueMap[i][0] = 0
+                if self.ValueMap[i][2] == 0  and (self.ValueMap[i][1]!=0 or self.ValueMap[i][0]!=0):
+                    while self.ValueMap[i][2] == 0:
+                        self.ValueMap[i][2] = self.ValueMap[i][1]
+                        self.ValueMap[i][1] = self.ValueMap[i][0]
+                        self.ValueMap[i][0] = 0
+                if self.ValueMap[i][1] == 0:
+                    while self.ValueMap[i][1] == 0 and self.ValueMap[i][0]!=0:
+                        self.ValueMap[i][1] = self.ValueMap[i][0]
+                        self.ValueMap[i][0] = 0
 
         """Adding similar numbers in adjacent spaces"""
-        j = 0
         for i in range(4):
-            if self.ValueMap[i][j+3] == self.ValueMap[i][j+2]:
-                self.ValueMap[i][j+3] = self.ValueMap[i][j+3] + self.ValueMap[i][j+2]
-                self.ValueMap[i][j+2] = self.ValueMap[i][j+1]
-                self.ValueMap[i][j+1] = self.ValueMap[i][j]
-                self.ValueMap[i][j] = 0
-            if self.ValueMap[i][j+2] == self.ValueMap[i][j+1]:
-                self.ValueMap[i][j+2] = self.ValueMap[i][j+2] + self.ValueMap[i][j+1]
-                self.ValueMap[i][j+1] = self.ValueMap[i][j]
-                self.ValueMap[i][j] = 0
-            if self.ValueMap[i][j+1] == self.ValueMap[i][j]:
-                self.ValueMap[i][j+1] = self.ValueMap[i][j+1] + self.ValueMap[i][j]
-                self.ValueMap[i][j] = 0
+            if self.ValueMap[i][3] == self.ValueMap[i][2]:
+                self.ValueMap[i][3] = self.ValueMap[i][3] + self.ValueMap[i][2]
+                self.ValueMap[i][2] = self.ValueMap[i][1]
+                self.ValueMap[i][1] = self.ValueMap[i][0]
+                self.ValueMap[i][0] = 0
+            if self.ValueMap[i][2] == self.ValueMap[i][1]:
+                self.ValueMap[i][2] = self.ValueMap[i][2] + self.ValueMap[i][1]
+                self.ValueMap[i][1] = self.ValueMap[i][0]
+                self.ValueMap[i][0] = 0
+            if self.ValueMap[i][1] == self.ValueMap[i][0]:
+                self.ValueMap[i][1] = self.ValueMap[i][1] + self.ValueMap[i][0]
+                self.ValueMap[i][0] = 0
 
         return self.ArrayToPolys()
 

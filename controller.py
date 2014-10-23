@@ -7,7 +7,7 @@ recieves, sends process requests, and returns updated slice placement
 import pygame as pg
 from slices import Slice
 from math import pi
-from array import ArrayManipulation as AM
+from model import ArrayManipulation as AM
 
 class Controller(object):
     """
