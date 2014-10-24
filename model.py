@@ -210,13 +210,12 @@ class ArrayManipulation():
                         polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[0]])		#populating list of form: [[theta, layer, value], [...]]
                     else:
                         polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[int(log(self.ValueMap[i][j], 2)-1)]])		#populating list of form: [[theta, layer, value], [...]]
-        print self.ValueMap
-        print self.OLDVM
+
         if self.ValueMap != self.OLDVM:
             zeros = self.randGen()
             if zeros:
                 rand_point = rand.choice(zeros)
-                polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, (200, 200, 200)]) 
+                polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, colors[0]]) 
 
         highScore = np.asarray(self.ValueMap).max()
         return polys_list, highScore
