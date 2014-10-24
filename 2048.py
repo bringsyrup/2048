@@ -117,7 +117,7 @@ class Game(object):
                             break
                 elif event.type == KEYDOWN:
                     if event.key != K_ESCAPE:
-                        curr_polypos, curr_highScore = control.keys(event, polys)
+                        curr_polypos, curr_highScore = control.keys(event, polys, curr_highScore)
                         if curr_highScore > self.highScore:
                             self.highScore = curr_highScore
                         screen, buttons, polys = self.init(curr_dims, polypos=curr_polypos)

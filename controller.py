@@ -16,7 +16,7 @@ class Controller(object):
     def __init__(self):
         self = self
 
-    def keys(self, event, polys):
+    def keys(self, event, polys, highScore):
         if event.key == pg.K_UP:
             return AM(polys).UP()
         elif event.key == pg.K_DOWN:
@@ -29,5 +29,5 @@ class Controller(object):
             print "keyboard sequence no recognized"
             polypos = list()
             for poly in polys:
-                polypos.append([poly.theta, poly.layer, poly.value])
-            return polypos
+                polypos.append([poly.theta, poly.layer, poly.value, poly.color])
+            return polypos, highScore
