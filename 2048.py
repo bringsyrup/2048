@@ -17,7 +17,7 @@ from random import randint
 
 class Game(object):
 
-    def __init__(self, fillColor=(255,255,255), polyBorder=(100,100,100), layers=4, width=200):
+    def __init__(self, fillColor=(255,255,255), polyBorder=(100,100,100), layers=4, width=200, highScore=2):
         """
         initialize Game class with background color, circle color and number of circles
         """
@@ -25,6 +25,7 @@ class Game(object):
         self.polyBorder = polyBorder
         self.layers = layers
         self.width = width
+        self.highScore = highScore
 
     def make_butts(self, dims, screen):
         button_list = tuple()
@@ -33,28 +34,18 @@ class Game(object):
         newGame = Button(
                     screen,
                     [200, 50],
-                    [dims[0]/2-100, dims[1]-75],
+                    [dims[0]/2-100, dims[1]-(150*dims[1]/875)],
                     ["new game", 20],
-                    [(210, 210, 255), (200, 200, 230), (0, 0, 0)]
+                    [(200, 200, 255), (175, 175, 230), (0, 0, 0)]
                     )
         live_butts.append(newGame)
         button_list += newGame.staticButton()
-        '''make PAUSE dynamic button'''
-        pause = Button(
-                    screen,
-                    [100, 50],
-                    [dims[0]/4-100, dims[1]-75],
-                    ["pause", 20],
-                    [(230, 200, 200), (230, 100, 100), (0, 0, 0)]
-                    )
-        live_butts.append(pause)
-        button_list += pause.staticButton()
         '''make HIGH SCORE static button'''
         highScore = Button(
                     screen,
                     [100, 50],
-                    [dims[0]/2-100, 20],
-                    ["HIGH SCORE:", 20],
+                    [dims[0]/2-50, (50*dims[1]/875)],
+                    ["HIGH SCORE: " + str(self.highScore), 20],
                     [(255, 255, 255), (255, 255, 255), (0, 0, 0)]
                     )
         button_list += highScore.staticButton()
@@ -89,7 +80,7 @@ class Game(object):
         pg.display.update(buttons)
         polys = list()
         for poly in polypos:
-            new_poly = Slice(screen, dims, self.width, poly[0], poly[1], poly[2])
+            new_poly = Slice(screen, dims, self.width, poly[0], poly[1], poly[2], poly[3])
             polys.append(new_poly)
             pg.display.update(new_poly.init())
         return screen, live_butts, polys
@@ -104,9 +95,10 @@ class Game(object):
         function that runs the game. like the cpu of the game. kind of.
         """
         rand_outer = [0., pi/2., pi, 3.*pi/2.]
-        curr_polypos = [[rand_outer[randint(0, 3)], randint(1, 2), 2], [rand_outer[randint(0, 3)], randint(3, 4), 2]]
+        curr_polypos = [[rand_outer[randint(0, 3)], randint(1, 2), 2, (200, 200, 230)], [rand_outer[randint(0, 3)], randint(3, 4), 2, (200, 200, 230)]]
         screen, buttons, polys = self.init(curr_dims, polypos=curr_polypos)
         control = Controller()
+        curr_highScore = 2
         while True:
             pg.event.pump()
             for event in pg.event.get():
@@ -122,11 +114,12 @@ class Game(object):
                             print "new game"
                             self.run(curr_dims=curr_dims)
                         else:
-                            print "game paused"
                             break
                 elif event.type == KEYDOWN:
                     if event.key != K_ESCAPE:
-                        curr_polypos = control.keys(event, polys)
+                        curr_polypos, curr_highScore = control.keys(event, polys)
+                        if curr_highScore > self.highScore:
+                            self.highScore = curr_highScore
                         screen, buttons, polys = self.init(curr_dims, polypos=curr_polypos)
                     else:
                         self.quit()

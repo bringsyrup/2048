@@ -6,13 +6,14 @@ import pygame as pg
 from math import sin, cos, pi
 
 class Slice(object):
-    def __init__(self, screen, dims, width, theta, layer, value):
+    def __init__(self, screen, dims, width, theta, layer, value, color):
         self.screen = screen
         self.dims = dims
         self.width = width
         self.theta = theta
         self.layer = float(layer)
         self.value = value
+        self.color = color
         self.x = "x = .5*self.dims[0] + nlayer/4*self.width*cos(ntheta)"
         self.y = "y = .5*self.dims[1] + nlayer/4*self.width*sin(ntheta)"
 
@@ -24,7 +25,7 @@ class Slice(object):
     def init(self):
         pg.draw.polygon(
                 self.screen, 
-                (200, 200, 200),
+                self.color,
                 [self.points(self.theta, self.layer),
                     self.points(self.theta, self.layer-1),
                     self.points(pi/4+self.theta, self.layer-1),
@@ -35,7 +36,7 @@ class Slice(object):
                 )
         pg.draw.polygon(
                 self.screen, 
-                (100, 100, 100),
+                (075, 075, 075),
                 [self.points(self.theta, self.layer),
                     self.points(self.theta, self.layer-1),
                     self.points(pi/4+self.theta, self.layer-1),
@@ -46,9 +47,9 @@ class Slice(object):
                 3
                 )
         self.screen.blit(
-                pg.font.SysFont('Arial', 12).render(str(self.value), True, (100, 100, 100)),
+                pg.font.SysFont('Arial', 11).render(str(self.value), True, (075, 075, 075)),
                 (
-                    self.points(pi/4+self.theta, self.layer-1)[0] + ((self.points(pi/4+self.theta, self.layer)[0]-self.points(pi/4+self.theta, self.layer-1)[0])/2) - 4,
-                    self.points(pi/4+self.theta, self.layer)[1] + ((self.points(pi/4+self.theta, self.layer-1)[1]-self.points(pi/4+self.theta, self.layer)[1])/2) - 7
+                    self.points(pi/4+self.theta, self.layer-1)[0] + ((self.points(pi/4+self.theta, self.layer)[0]-self.points(pi/4+self.theta, self.layer-1)[0])/2) - 5,
+                    self.points(pi/4+self.theta, self.layer)[1] + ((self.points(pi/4+self.theta, self.layer-1)[1]-self.points(pi/4+self.theta, self.layer)[1])/2) - 4
                     )
                 )

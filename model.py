@@ -2,10 +2,11 @@
 Creating array to track values
 """
 
-from math import pi
+from math import pi, log
 from slices import Slice
 import pygame as pg
 import random as rand
+import numpy as np
 
 
 class ArrayManipulation():
@@ -183,14 +184,31 @@ class ArrayManipulation():
         return self.ArrayToPolys()
 
     def ArrayToPolys(self):
+        colors = [
+                (200, 200, 230),
+                (150, 200, 250),
+                (100, 175, 250),
+                (050, 150, 250),
+                (100, 100, 250),
+                (070, 070, 250),
+                (100, 200, 250),
+                (050, 100, 200),
+                (150, 250, 250),
+                (200, 230, 250),
+                (200, 250, 250)
+                ]
         polys_list = []
         for i in range(4):
             for j in range(4):
                 if self.ValueMap[i][j] != 0:
-                    polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j]])		#populating list of form: [[theta, layer, value], [...]]
+                    if self.ValueMap[i][j] > 2048:
+                        polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[0]])		#populating list of form: [[theta, layer, value], [...]]
+                    else:
+                        polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[int(log(self.ValueMap[i][j], 2)-1)]])		#populating list of form: [[theta, layer, value], [...]]
         zeros = self.randGen()
         if zeros:
             rand_point = rand.choice(zeros)
-            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2])	
-        return polys_list
+            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, colors[0]])	
+        highScore = np.asarray(self.ValueMap).max()
+        return polys_list, highScore
     
