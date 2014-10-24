@@ -65,7 +65,13 @@ class ArrayManipulation():
                 self.ValueMap[2][j] = self.ValueMap[2][j] + self.ValueMap[3][j]
                 self.ValueMap[3][j] = 0
 
-        return self.ArrayToPolys()
+        polys_list, highScore = self.ArrayToPolys()
+        zeros = self.randGen()
+        if zeros:
+            rand_point = rand.choice(zeros)
+            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, (200, 200, 200)])	
+
+        return polys_list, highScore
 
 
     def RIGHT(self):
@@ -104,7 +110,13 @@ class ArrayManipulation():
                 self.ValueMap[1][j] = self.ValueMap[1][j] + self.ValueMap[0][j]
                 self.ValueMap[0][j] = 0
 
-        return self.ArrayToPolys()
+        polys_list, highScore = self.ArrayToPolys()
+        zeros = self.randGen()
+        if zeros:
+            rand_point = rand.choice(zeros)
+            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, (200, 200, 200)])	
+
+        return polys_list, highScore
 
 
     def UP(self):
@@ -143,7 +155,14 @@ class ArrayManipulation():
                 self.ValueMap[i][2] = self.ValueMap[i][2] + self.ValueMap[i][3]
                 self.ValueMap[i][3] = 0
 
-        return self.ArrayToPolys()
+        polys_list, highScore = self.ArrayToPolys()
+        zeros = self.randGen()
+        if zeros:
+            rand_point = rand.choice(zeros)
+            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, (200, 200, 200)])	
+
+        return polys_list, highScore
+
 
     def DOWN(self):
         """when down is pressed"""
@@ -181,7 +200,13 @@ class ArrayManipulation():
                 self.ValueMap[i][1] = self.ValueMap[i][1] + self.ValueMap[i][0]
                 self.ValueMap[i][0] = 0
 
-        return self.ArrayToPolys()
+        polys_list, highScore = self.ArrayToPolys()
+        zeros = self.randGen()
+        if zeros:
+            rand_point = rand.choice(zeros)
+            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, (200, 200, 200)])	
+
+        return polys_list, highScore
 
     def ArrayToPolys(self):
         colors = [
@@ -205,10 +230,6 @@ class ArrayManipulation():
                         polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[0]])		#populating list of form: [[theta, layer, value], [...]]
                     else:
                         polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[int(log(self.ValueMap[i][j], 2)-1)]])		#populating list of form: [[theta, layer, value], [...]]
-        zeros = self.randGen()
-        if zeros:
-            rand_point = rand.choice(zeros)
-            polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, colors[0]])	
         highScore = np.asarray(self.ValueMap).max()
         return polys_list, highScore
     
