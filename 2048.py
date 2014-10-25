@@ -17,14 +17,13 @@ from random import randint
 
 class Game(object):
 
-    def __init__(self, fillColor=(255,255,255), polyBorder=(100,100,100), layers=4, width=200, highScore=2):
+    def __init__(self, fillColor=(255,255,255), polyBorder=(200,200,200), layers=4, highScore=2):
         """
         initialize Game class with background color, circle color and number of circles
         """
         self.fillColor = fillColor
         self.polyBorder = polyBorder
         self.layers = layers
-        self.width = width
         self.highScore = highScore
 
     def make_butts(self, dims, screen):
@@ -45,7 +44,7 @@ class Game(object):
                     screen,
                     [100, 50],
                     [dims[0]/2-50, (50*dims[1]/875)],
-                    ["HIGH SCORE: " + str(self.highScore), 20],
+                    ["high score: " + str(self.highScore), 20],
                     [(255, 255, 255), (255, 255, 255), (0, 0, 0)]
                     )
         button_list += highScore.staticButton()
@@ -65,24 +64,24 @@ class Game(object):
                     screen, 
                     self.polyBorder, 
                     [
-                        [(.5*dims[0] + i/4.*self.width*cos(0)), (.5*dims[1] + i/4.*self.width*sin(0))], 
-                        [(.5*dims[0] + i/4.*self.width*cos(pi/4)), (.5*dims[1] + i/4.*self.width*sin(pi/4))],
-                        [(.5*dims[0] + i/4.*self.width*cos(pi/2)), (.5*dims[1] + i/4.*self.width*sin(pi/2))], 
-                        [(.5*dims[0] + i/4.*self.width*cos(3*pi/4)), (.5*dims[1] + i/4.*self.width*sin(3*pi/4))], 
-                        [(.5*dims[0] + i/4.*self.width*cos(pi)), (.5*dims[1] + i/4.*self.width*sin(pi))], 
-                        [(.5*dims[0] + i/4.*self.width*cos(5*pi/4)), (.5*dims[1] + i/4.*self.width*sin(5*pi/4))], 
-                        [(.5*dims[0] + i/4.*self.width*cos(6*pi/4)), (.5*dims[1] + i/4.*self.width*sin(6*pi/4))], 
-                        [(.5*dims[0] + i/4.*self.width*cos(7*pi/4)), (.5*dims[1] + i/4.*self.width*sin(7*pi/4))] 
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(0)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(0))], 
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(pi/4)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(pi/4))],
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(pi/2)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(pi/2))], 
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(3*pi/4)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(3*pi/4))], 
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(pi)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(pi))], 
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(5*pi/4)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(5*pi/4))], 
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(6*pi/4)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(6*pi/4))], 
+                        [(.5*dims[0] + i/4.*dims[1]/3.5*cos(7*pi/4)), (.47*dims[1] + i/4.*dims[1]/3.5*sin(7*pi/4))] 
                         ],
                     3
                     )
-        pg.display.flip()
-        pg.display.update(buttons)
+        to_update = [button for button in buttons]
         polys = list()
         for poly in polypos:
-            new_poly = Slice(screen, dims, self.width, poly[0], poly[1], poly[2], poly[3])
+            new_poly = Slice(screen, dims, dims[1]/3.5, poly[0], poly[1], poly[2], poly[3])
             polys.append(new_poly)
-            pg.display.update(new_poly.init())
+            to_update.append(new_poly.init())
+        pg.display.update(tuple(to_update))
         return screen, live_butts, polys
     
     def quit(self):

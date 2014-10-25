@@ -15,7 +15,7 @@ class Slice(object):
         self.value = value
         self.color = color
         self.x = "x = .5*self.dims[0] + nlayer/4*self.width*cos(ntheta)"
-        self.y = "y = .5*self.dims[1] + nlayer/4*self.width*sin(ntheta)"
+        self.y = "y = .47*self.dims[1] + nlayer/4*self.width*sin(ntheta)"
 
     def points(self, ntheta, nlayer):
         exec self.x
@@ -36,7 +36,7 @@ class Slice(object):
                 )
         pg.draw.polygon(
                 self.screen, 
-                (075, 075, 075),
+                (200, 200, 200),
                 [self.points(self.theta, self.layer),
                     self.points(self.theta, self.layer-1),
                     self.points(pi/4+self.theta, self.layer-1),
@@ -44,7 +44,7 @@ class Slice(object):
                     self.points(pi/2+self.theta, self.layer),
                     self.points(pi/4+self.theta, self.layer)
                     ],
-                3
+                5
                 )
         self.screen.blit(
                 pg.font.SysFont('Arial', 11).render(str(self.value), True, (075, 075, 075)),
