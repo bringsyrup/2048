@@ -21,5 +21,5 @@ the arrow keys control movement and are as follows:
  - up arrow --> move inward toward center
  - down arrow -- > move outward toward edge
 
-to exit the game either use the window bar icons or press <esc>
+to exit the game either use the window bar icons or press <<ESC>>
 you may resize the game as you would any resizable window
