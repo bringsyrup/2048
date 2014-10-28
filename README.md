@@ -16,10 +16,10 @@ then you can execute the file with
 ```
 ### the controls
 the arrow keys control movement and are as follows:
-    - right arrow --> rotate clockwise
-    - left arrow --> rotate counterclockwise
-    - up arrow --> move inward toward center
-    - down arrow -- > move outward toward edge
+ - right arrow --> rotate clockwise
+ - left arrow --> rotate counterclockwise
+ - up arrow --> move inward toward center
+ - down arrow -- > move outward toward edge
 
 to exit the game either use the window bar icons or press <esc>
 you may resize the game as you would any resizable window
