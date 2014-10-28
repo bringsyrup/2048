@@ -18,7 +18,6 @@ class ArrayManipulation():
 
     def Polys2Array(self):
         """converts list of polygons to matrix ValueMap"""
-
         for poly in self.polys:
             self.ValueMap[int((poly.theta)*(2. / pi))][int(poly.layer - 1)] = int(poly.value)		#switching from theta to i and layer to j
             self.OLDVM[int((poly.theta)*(2. / pi))][int(poly.layer - 1)] = int(poly.value)          #creating an original copy of the value map
@@ -187,6 +186,7 @@ class ArrayManipulation():
         return self.ArrayToPolys()       
 
     def ArrayToPolys(self):
+        """colors for different values"""
         colors = [
                 (200, 200, 230),
                 (150, 200, 250),
@@ -201,7 +201,7 @@ class ArrayManipulation():
                 (200, 250, 250)
                 ]
 
-
+        """changing the value map to polys_list"""
         polys_list = []
         for i in range(4):
             for j in range(4):
@@ -210,13 +210,13 @@ class ArrayManipulation():
                         polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[0]])		#populating list of form: [[theta, layer, value], [...]]
                     else:
                         polys_list.append([(pi/2.)*i, j+1, self.ValueMap[i][j], colors[int(log(self.ValueMap[i][j], 2)-1)]])		#populating list of form: [[theta, layer, value], [...]]
-
+        """don't add an additional shape if keyboard control doesn't actually move anything"""
         if self.ValueMap != self.OLDVM:
             zeros = self.randGen()
             if zeros:
                 rand_point = rand.choice(zeros)
                 polys_list.append([(pi/2.)*rand_point[0], rand_point[1]+1, 2, colors[0]]) 
-
+        """tracking the highscore"""
         highScore = np.asarray(self.ValueMap).max()
         return polys_list, highScore
 

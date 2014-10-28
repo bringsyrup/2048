@@ -18,6 +18,7 @@ class Slice(object):
         self.y = "y = .47*self.dims[1] + nlayer/4*self.width*sin(ntheta)"
 
     def points(self, ntheta, nlayer):
+        """points to define polygon"""
         exec self.x
         exec self.y
         return [x, y]
@@ -34,6 +35,7 @@ class Slice(object):
                     self.points(pi/4+self.theta, self.layer)
                     ]
                 )
+        """filled in polygon"""
         pg.draw.polygon(
                 self.screen, 
                 (200, 200, 200),

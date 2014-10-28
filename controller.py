@@ -26,7 +26,7 @@ class Controller(object):
         elif event.key == pg.K_RIGHT:
             return AM(polys).RIGHT()
         else:
-            print "keyboard sequence no recognized"
+            print "keyboard sequence not recognized"
             polypos = list()
             for poly in polys:
                 polypos.append([poly.theta, poly.layer, poly.value, poly.color])

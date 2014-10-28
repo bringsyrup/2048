@@ -23,6 +23,7 @@ class Button(object):
         self.font = pg.font.SysFont('Arial', self.fontsize)   # text[1] is fontsize
 
     def getText(self):
+        """ adding text to buttons and placing in center"""
         x_len = .55*self.fontsize*len(self.text)
         y_len = self.fontsize
         x_txt = self.location[0] + .5*(self.size[0] - x_len)
@@ -59,6 +60,7 @@ class Button(object):
                     ),
                 3
                 )
+        """placing text"""
         textLocation = self.getText()
         text = self.surf.blit(
                 self.font.render(self.text,
