@@ -4,7 +4,7 @@
 ## To play:
 ### execution:
 ```sh
-python 2048
+python 2048.py
 ```
 or edit the shebang at the top of 2048 to match your OS needs and make the file executible with:
 ```sh
